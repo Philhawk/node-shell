@@ -1,4 +1,4 @@
-var commands = require('./command.js');
+var commands = require('./commands.js');
 
 process.stdout.write('prompt > ');
 
@@ -7,8 +7,11 @@ process.stdout.write('prompt > ');
 
     commands.pwdFunction(cmd);
 
-  commands.dateFunction(cmd);
-
+    commands.dateFunction(cmd);
+    commands.fileStructure(cmd);
+    commands.echoFunction(cmd);
+    commands.catFunction(cmd);
+    // commands.catFunction(cmd);
   // process.stdout.write('You typed ' + cmd);
   process.stdout.write('\nprompt > ')
 })
