@@ -1,0 +1,26 @@
+{
+  "name": "phandy",
+  "version": "1.0.0",
+  "description": "Replicating command like tools",
+  "main": "bash.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Philhawk/node-shell.git"
+  },
+  "keywords": [
+    "curl",
+    "ls",
+    "cat",
+    "head",
+    "tail"
+  ],
+  "author": "Andy and Phil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Philhawk/node-shell/issues"
+  },
+  "homepage": "https://github.com/Philhawk/node-shell#readme"
+}

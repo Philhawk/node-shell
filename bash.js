@@ -11,6 +11,9 @@ process.stdout.write('prompt > ');
     commands.fileStructure(cmd);
     commands.echoFunction(cmd);
     commands.catFunction(cmd);
+    commands.headFunction(cmd);
+    commands.tailFunction(cmd);
+    commands.curlFunction(cmd);
     // commands.catFunction(cmd);
   // process.stdout.write('You typed ' + cmd);
   process.stdout.write('\nprompt > ')
