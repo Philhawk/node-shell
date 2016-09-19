@@ -79,14 +79,81 @@ exports.tailFunction = function(data) {
   }
 }
 
+exports.sortFunction = function(data){
+  var dataArray = data.split(' ');
+
+  if(dataArray[0] === 'sort'){
+
+    fs.readFile(dataArray[1], function (err, data) {
+       if (err) {
+           return console.error(err);
+       }
+
+       var eachLine = data.toString().split('\n').sort().join('\n');
+       process.stdout.write(eachLine);
+     })
+     process.stdout.write("prompt > ")
+   }
+}
+
+exports.lineCount = function(data) {
+  var dataArray = data.split(' ');
+
+  if(dataArray[0] === 'wc'){
+
+    fs.readFile(dataArray[1], function (err, data) {
+       if (err) {
+           return console.error(err);
+       }
+
+       var numLines = data.toString().split('\n').sort().join('\n');
+       var linesOutput = numLines.split('\n').length;
+
+       process.stdout.write(linesOutput.toString());
+     })
+     process.stdout.write("prompt > ")
+   }
+}
+
+exports.uniqFunction = function(data) {
+  var dataArray = data.split(' ');
+
+  if(dataArray[0] === 'uniq'){
+
+    fs.readFile(dataArray[1], function (err, data) {
+       if (err) {
+           return console.error(err);
+       }
+
+       var eachLine = data.toString().split('\n')
+
+       var resultArray = [];
+       for (var i = 0; i < eachLine.length - 1; i++) {
+           if (eachLine[i + 1] !== eachLine[i]) {
+               resultArray.push(eachLine[i]);
+           }
+         resultArray;
+       }
+       process.stdout.write('\n' + resultArray.join('\n'));
+     })
+     process.stdout.write("prompt > ")
+   }
+}
+
 exports.curlFunction = function(data){
   var dataArray = data.split(' ');
 
   if(dataArray[0] === 'curl') {
+    if(!dataArray[1].includes('https://')) {
+      console.error("Please insert full hypertext link including 'https://'");
+    }
+
       request(dataArray[1], function (error, response, body) {
         if (!error && response.statusCode == 200) {
           console.log(body) // Show the HTML for the Google homepage.
+          process.stdout.write("prompt > ")
         }
       })
+
   }
 }

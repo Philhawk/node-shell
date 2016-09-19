@@ -14,6 +14,9 @@ process.stdout.write('prompt > ');
     commands.headFunction(cmd);
     commands.tailFunction(cmd);
     commands.curlFunction(cmd);
+    commands.sortFunction(cmd);
+    commands.lineCount(cmd);
+    commands.uniqFunction(cmd);
     // commands.catFunction(cmd);
   // process.stdout.write('You typed ' + cmd);
   process.stdout.write('\nprompt > ')
