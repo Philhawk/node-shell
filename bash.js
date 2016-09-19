@@ -5,19 +5,22 @@ process.stdout.write('prompt > ');
   process.stdin.on('data', function(data) {
     var cmd = data.toString().trim();
 
-    commands.pwdFunction(cmd);
+    var cmdList = cmd.split((/\s*\|\s*/g));
 
-    commands.dateFunction(cmd);
-    commands.fileStructure(cmd);
-    commands.echoFunction(cmd);
-    commands.catFunction(cmd);
-    commands.headFunction(cmd);
-    commands.tailFunction(cmd);
-    commands.curlFunction(cmd);
-    commands.sortFunction(cmd);
-    commands.lineCount(cmd);
-    commands.uniqFunction(cmd);
-    // commands.catFunction(cmd);
-  // process.stdout.write('You typed ' + cmd);
-  process.stdout.write('\nprompt > ')
+    if (cmd === '') {
+      return process.stdout.write('prompt > ');
+    }
+
+    commands.pwd(cmdList);
+
+    commands.date(cmdList);
+    commands.ls(cmdList);
+    commands.echo(cmdList);
+    commands.cat(cmdList);
+    commands.head(cmdList);
+    commands.tail(cmdList);
+    commands.curl(cmdList);
+    commands.sortThis(cmdList);
+    commands.wc(cmdList);
+    commands.uniq(cmdList);
 })

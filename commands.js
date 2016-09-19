@@ -1,71 +1,91 @@
 var exports = module.exports;
+
 var fs = require('fs');
 var request = require('request');
 
-exports.pwdFunction = function(data) {
-  if (data === 'pwd') {
-    return process.stdout.write(process.cwd());
+exports.done = function(output, func){
+  if (func){ t90-=0=5wq Zx//;
+    console.log('is there func', func)
+    exports[func](output);
+  } else {
+  console.log('no there is not func', output)
+  process.stdout.write(output)
   }
 }
 
-exports.dateFunction = function(data){
-  if(data === 'date') {
+exports.pwd = function(data) {
+  if (data[0] === 'pwd') {
+    var pwdOutput = process.cwd().toString();
+    exports.done(pwdOutput, data[1]);
+  }
+}
+
+
+exports.date = function(data) {
+  if(data[0] === 'date') {
     var date = new Date();
-    return process.stdout.write(date.toString());
+    var dateOutput = process.stdout.write(date.toString());
+    exports.done(dateOutput.toString());
   }
 }
 
-exports.fileStructure = function(data){
-  if(data === 'ls') {
+exports.ls = function(input){
+  if(input[0] === 'ls') {
     var files = fs.readdir('.', function(err, files) {
                   if (err) throw err;
+                  var results = [];
                   files.forEach(function(file) {
-                    process.stdout.write(file.toString() + "\n");
+                    results.push(file.toString());
                   })
-                  process.stdout.write("prompt > ");
+                  exports.done(results.join('\n'), input[1])
                 });
-    return files;
   }
 }
 
-exports.echoFunction = function(data) {
-  var dataArray = data.split(' ');
+exports.echo = function(data) {
+  var echoArray = data[0];
+  var dataArray = echoArray.split(' ');
   if(dataArray[0] === 'echo') {
-    process.stdout.write(dataArray[1]);
+    exports.done(dataArray[1]);
   }
 }
 
-exports.catFunction = function(data){
-  var dataArray = data.split(' ');
+exports.cat = function(input){
 
+  var catArray = input[0];
+  var dataArray = catArray.split(' ');
   if(dataArray[0] === 'cat'){
     fs.readFile(dataArray[1], function (err, data) {
        if (err) {
            return console.error(err);
        }
-       process.stdout.write("\n" + data.toString());
+       exports.done(data.toString(), input[1]);
      })
-     process.stdout.write("prompt > ")
    }
 }
 
-exports.headFunction = function(data) {
-  var dataArray = data.split(' ');
+exports.head = function(data) {
+  var headArray = data[0];
+  var dataArray = headArray.split(' ');
   if(dataArray[0] === 'head') {
     fs.readFile(dataArray[1], function(err, data) {
       if(err) {
         return console.error(err);
       }
-      var firstFive = data.toString().split('\n').slice(0, 6);
-      process.stdout.write('\n' + firstFive.join('\n'))
-      process.stdout.write('\n' + "prompt > ")
+      var firstFive = data.toString().split('\n').slice(0, 5);
+      exports.done(firstFive.join('\n'));
     })
 
+  } else {
+    var firstFive = data.toString().split('\n').slice(0, 5);
+    exports.done(firstFive.join('\n'));
   }
 }
 
-exports.tailFunction = function(data) {
-  var dataArray = data.split(' ');
+exports.tail = function(data) {
+  var tailArray = data[0]
+  var dataArray = tailArray.split(' ');
+
   if(dataArray[0] === 'tail') {
     fs.readFile(dataArray[1], function(err, data) {
       if(err) {
@@ -73,14 +93,14 @@ exports.tailFunction = function(data) {
       }
       var stringsInFile = data.toString().split('\n').length;
       var lastFive = data.toString().split('\n').slice(stringsInFile - 6);
-      process.stdout.write('\n' + lastFive.join('\n'));
-      process.stdout.write("prompt > ")
+      exports.done(lastFive.join('\n'));
     })
   }
 }
 
-exports.sortFunction = function(data){
-  var dataArray = data.split(' ');
+exports.sortThis = function(data){
+  var sortArray = data[0];
+  var dataArray = sortArray.split(' ');
 
   if(dataArray[0] === 'sort'){
 
@@ -90,14 +110,14 @@ exports.sortFunction = function(data){
        }
 
        var eachLine = data.toString().split('\n').sort().join('\n');
-       process.stdout.write(eachLine);
+       exports.done(eachLine);
      })
-     process.stdout.write("prompt > ")
    }
 }
 
-exports.lineCount = function(data) {
-  var dataArray = data.split(' ');
+exports.wc = function(data) {
+  var lineArray = data[0];
+  var dataArray = lineArray.split(' ');
 
   if(dataArray[0] === 'wc'){
 
@@ -108,15 +128,18 @@ exports.lineCount = function(data) {
 
        var numLines = data.toString().split('\n').sort().join('\n');
        var linesOutput = numLines.split('\n').length;
-
-       process.stdout.write(linesOutput.toString());
+       exports.done(linesOutput.toString());
      })
-     process.stdout.write("prompt > ")
+   } else {
+     var numLines = data.toString().split('\n').sort().join('\n');
+     var linesOutput = numLines.split('\n').length;
+     exports.done(linesOutput.toString());
    }
 }
 
-exports.uniqFunction = function(data) {
-  var dataArray = data.split(' ');
+exports.uniq = function(data) {
+  var uniqArray = data[0];
+  var dataArray = uniqArray.split(' ');
 
   if(dataArray[0] === 'uniq'){
 
@@ -134,14 +157,15 @@ exports.uniqFunction = function(data) {
            }
          resultArray;
        }
-       process.stdout.write('\n' + resultArray.join('\n'));
+      exports.done(resultArray.join('\n'));
+
      })
-     process.stdout.write("prompt > ")
    }
 }
 
-exports.curlFunction = function(data){
-  var dataArray = data.split(' ');
+exports.curl = function(data){
+  var curlArray = data[0];
+  var dataArray = curlArray.split(' ');
 
   if(dataArray[0] === 'curl') {
     if(!dataArray[1].includes('https://')) {
@@ -150,8 +174,7 @@ exports.curlFunction = function(data){
 
       request(dataArray[1], function (error, response, body) {
         if (!error && response.statusCode == 200) {
-          console.log(body) // Show the HTML for the Google homepage.
-          process.stdout.write("prompt > ")
+          exports.done(body);
         }
       })
 
